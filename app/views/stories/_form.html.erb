@@ -1,0 +1,30 @@
+<%= form_with(model: @story, local: true) do |f| %>
+  <% if @story.errors.any? %>
+    <div class="alert alert-danger mt-2" role="alert">
+      <ul>
+        <% @story.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group mt-3">
+    <%= f.label :title %>
+    <div class="col-md-8">
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-groupmt-3 field">
+    <%= f.label :description %>
+    <div class="col-md-8">
+      <%= f.text_area :description, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group mt-3">
+    <%= f.submit class: 'btn btn-success' %>
+    <%= link_to 'Back', stories_path, class: 'btn btn-primary' %>
+  </div>
+<% end %>

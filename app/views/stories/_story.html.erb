@@ -1,0 +1,10 @@
+<div style='border-style: ridge; padding: 20px;', class='mt-2'>
+  <b><%= story.title %></b><br>
+  <%= story.description.truncate(200) %><br>
+  
+  <div class='mt-2'>
+    <%= link_to 'Show', story_path(story), class: 'btn btn-warning' %>
+    <%= link_to 'Edit', edit_story_path(story), class: 'btn btn-success' %>
+    <%= link_to 'Delete', story_path(story), method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure?"} %>
+  </div>
+</div>
