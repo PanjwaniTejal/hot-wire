@@ -1,3 +1,5 @@
 <h2>Edit Story</h2>
-
-<%= render partial: 'form', object: @story %>
+    
+<%= turbo_frame_tag "story_#{@story.id}" do %>
+  <%= render partial: 'form', object: @story %>
+<% end %>

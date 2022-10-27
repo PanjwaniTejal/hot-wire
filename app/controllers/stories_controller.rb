@@ -13,29 +13,36 @@ class StoriesController < ApplicationController
 
   def create
     @story = Story.new(story_params)
-    if @story.save
-      redirect_to stories_path
-    else
-      # redirect_to new_story_path
-      render :new
+    respond_to do |format|
+      if @story.save
+        format.html { redirect_to stories_path, notice: "Story was successfully destroyed." }
+      else
+        format.html { render :new }
+      end
     end
   end
 
   def edit; end
 
   def update
-    if @story.update(story_params)
-      redirect_to stories_path
-    else
-      redirect_to edit_story_path
+    respond_to do |format|
+      if @story.update(story_params)
+        format.html { redirect_to stories_path }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("story_#{@story.id}", partial: 'story', locals: { story: @story }) }
+      else
+        format.html { redirect_to edit_story_path }
+      end
     end
   end
 
   def destroy
-    if @story.destroy
-      redirect_to stories_path
-    else
-      redirect_to stories_path
+    respond_to do |format|
+      if @story.destroy
+        format.html { redirect_to stories_path }
+        format.turbo_stream
+      else
+        format.html { redirect_to stories_path, notice: @story.errors.full_message }
+      end
     end
   end
 
