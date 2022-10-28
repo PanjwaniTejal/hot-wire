@@ -3,9 +3,15 @@
     <b><%= story.title %></b><br>
     <%= story.description.truncate(200) %><br>
     <div class='mt-2 d-flex'>
-      <%= link_to 'Show', story_path(story), class: 'btn btn-warning' %>
-      <%= link_to 'Edit', edit_story_path(story), class: 'btn btn-success', style: 'margin-left: 5px' %>
-      <span style='margin-left: 5px'><%= button_to 'Delete', story_path(story), method: :delete, class: 'btn btn-danger', data: {confirm: "Are you sure?"} %></span>
+      <%= link_to story_path(story) do %>
+        <%= fa_icon "eye" %>
+      <% end %>
+      <%= link_to edit_story_path(story), style: 'margin-left: 5px' do %>
+        <%= fa_icon "pencil" %>
+      <% end %>
+      <%= link_to story_path(story), style: 'margin-left: 5px', data: {confirm: "Are you sure?", "turbo-method": :delete} do %>
+        <%= fa_icon "trash" %>
+      <% end %>    
     </div>
   </div>
 <% end %>

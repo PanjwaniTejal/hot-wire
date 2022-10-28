@@ -1,59 +1,59 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
 # Create rails repostory
 rails new story-book
 
-# Set routes 
-* config/routes.rb
+# Set routes config/routes.rb
 root 'stories#index'
+
 resources :stories 
 
-# create controller 
+# Create controller 
 rails g controller stories
 
-# create model
+# Create model
 rails g model story title description
 
-# migrate database
+# Migrate database
 rails db:migrate
 
-# add bootstrap gem
+# Add bootstrap gem
 gem 'bootstrap'
 bundle install
 
-# if you have application.css file then convert it to application.scss
+# If you have application.css file then convert it to application.scss
 mv app/assets/stylesheets/application.css app/assets/stylesheets/application.scss
 
 add @import "bootstrap"; to application.scss
 
+# Add font-awesome gem for icon
+gem "font-awesome-rails"
+bundle install
+
+# Add below code into app/assets/stylesheets/application.scss
+@import "font-awesome";
 
 # Now let's add hot-wire into application
 gem "hotwire-rails"
-
-run bundle install
+# Run 
+bundle install
 
 # Then, you’ll install it.
 rails hotwire:install
+
+# Install jqury 
+yarn add jquery
+
+# Add below line into app/javascript/packs/application.js
+require("jquery")
+
+# Add below code into config/webpack/environment.js
+const webpack = require('webpack')
+environment.plugins.prepend('Provide',
+  new webpack.ProvidePlugin({
+    $: 'jquery/src/jquery',
+    jQuery: 'jquery/src/jquery'
+  })
+)
+
+
+# Change button_to to link_to for delete link
+https://stackoverflow.com/questions/70474422/rails-7-link-to-with-method-delete-still-performs-get-request

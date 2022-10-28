@@ -55,6 +55,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # bootstrap gem for UI changes
 gem 'bootstrap'
+gem "font-awesome-rails"
 
 # hot-wire gem
 gem 'hotwire-rails'
