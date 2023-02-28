@@ -18,3 +18,7 @@ require("jquery")
 import '../controllers'
 import '@hotwired/turbo-rails'
 import '@hotwired/stimulus'
+
+$(document).on('load', function(){
+  $('[data-toggle="tooltip"]').tooltip(); 
+});

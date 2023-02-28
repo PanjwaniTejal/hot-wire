@@ -1,5 +1,6 @@
 class StoriesController < ApplicationController
-  before_action :set_story, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:make_as_read, :make_as_unread]
+  before_action :set_story, only: [:show, :edit, :update, :destroy, :make_as_read, :make_as_unread]
 
   def index
     @stories = Story.all.order(created_at: :desc)
@@ -46,12 +47,40 @@ class StoriesController < ApplicationController
     end
   end
 
+  # GET /search?search='abc'
+  def search
+    @stories = Story.where("title LIKE ?", "%#{params[:search]}%").order(created_at: :desc)
+    respond_to do |format|
+      format.json { render json: render_to_string(partial: 'stories/story', collection: @stories, formats: [:html])}
+    end
+  end
+
+  # PATCH stories/:story_id/make_as_read
+  def make_as_read
+    @story.update(mark_as_read: true)
+    respond_to do |format|
+      format.json { render json: render_to_string(partial: 'stories/story', locals: {story: @story}, formats: [:html])}
+    end
+  end
+  
+  # PATCH stories/:story_id/make_as_unread
+  def make_as_unread
+    @story.update(mark_as_read: false)
+    respond_to do |format|
+      format.json { render json: render_to_string(partial: 'stories/story', locals: {story: @story}, formats: [:html])}
+    end
+  end
+
   private
   def story_params
     params.require(:story).permit(:title, :description)
   end
 
   def set_story
-    @story = Story.find(params[:id])
+    @story = if params[:id].present?
+              Story.find(params[:id])
+             elsif params[:story_id].present?
+              Story.find(params[:story_id])
+             end
   end
 end

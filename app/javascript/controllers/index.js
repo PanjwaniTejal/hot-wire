@@ -6,3 +6,9 @@ import { application } from "./application"
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import MakeAsReadUnreadController from "./make_as_read_unread_controller"
+application.register("make-as-read-unread", MakeAsReadUnreadController)
+
+import SearchController from "./search_controller"
+application.register("search", SearchController)

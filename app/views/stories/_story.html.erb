@@ -11,7 +11,32 @@
       <% end %>
       <%= link_to story_path(story), style: 'margin-left: 5px', data: {confirm: "Are you sure?", "turbo-method": :delete} do %>
         <%= fa_icon "trash" %>
-      <% end %>    
+      <% end %>   
+
+      <%# Mark as read & unread %>
+      <div data-controller='make-as-read-unread'>
+        <% if story.mark_as_read? %>
+          <%= link_to '/', style: 'margin-left: 5px', remote: true,
+              data: {
+                controller: 'make-as-read-unread',
+                action: 'click->make-as-read-unread#unread', 
+                'make-as-read-unread-url-value': story_make_as_unread_path(story_id: story.id),
+                'make-as-read-unread-story-id-value': story.id
+              }, "data-toggle" => "tooltip", "data-placement" => "right", "title" => "Make As Unread" do %>
+            <%= fa_icon "envelope-open" %>
+          <% end %>
+        <% else %>
+          <%= link_to '/', style: 'margin-left: 5px', remote: true,
+              data: {
+                controller: 'make-as-read-unread',
+                action: 'click->make-as-read-unread#read',
+                'make-as-read-unread-url-value': story_make_as_read_path(story_id: story.id),
+                'make-as-read-unread-story-id-value': story.id
+              }, "data-toggle" => "tooltip", "data-placement" => "right", "title" => "Make As Read" do %>
+            <%= fa_icon "envelope" %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>
